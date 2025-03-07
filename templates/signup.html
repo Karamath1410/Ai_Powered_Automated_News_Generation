@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AI News</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>Create Account</h1>
+            <p class="auth-subtitle">Join our news community</p>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="/signup" class="auth-form">
+                <div class="form-group">
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="age" id="age" placeholder="Age" required>
+                </div>
+                <div class="form-group">
+                    <div class="form-section-heading">Gender</div>
+                    <div class="gender-group">
+                        <label><input type="radio" name="gender" value="male" required> Male</label>
+                        <label><input type="radio" name="gender" value="female" required> Female</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-section-heading">Preferred Language</div>
+                    <select name="preferred_language" class="form-select">
+                        {% for code, name in languages.items() %}
+                        <option value="{{ code }}">{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-section-heading">Categories (Select at least one)</div>
+                <div class="categories-grid">
+                    <label><input type="checkbox" name="categories" value="technology"> Technology</label>
+                    <label><input type="checkbox" name="categories" value="sports"> Sports</label>
+                    <label><input type="checkbox" name="categories" value="entertainment"> Entertainment</label>
+                    <label><input type="checkbox" name="categories" value="health"> Health</label>
+                    <label><input type="checkbox" name="categories" value="science"> Science</label>
+                    <label><input type="checkbox" name="categories" value="business"> Business</label>
+                </div>
+                <button type="submit" class="auth-button">Sign Up</button>
+                <div class="auth-links">
+                    <a href="{{ url_for('login') }}" class="auth-link">Already have an account? Login</a>
+                    <span class="divider">|</span>
+                    <a href="{{ url_for('guest') }}" class="auth-link">Continue as Guest</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
